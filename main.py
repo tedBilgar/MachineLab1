@@ -3,35 +3,49 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
+#Передаем данные для построения графика через либу pandas и их записи в переменную
 path = 'ex1data1.txt'
 data = pd.read_csv(path, header=None, names=['Population', 'Profit'])
-data.head()
+#Выводим первые 5 записей и некоторую статистическую информацию о наборе
+print(data.head())
 data.describe()
 
+#Отображаем (выводим этот график) с определенным размером
 data.plot(kind='scatter', x='Population', y='Profit', figsize=(12,8))
 plt.show()
 
-
+#Добавляем новую колонку для нашей таблицы слева с именем Ones и со значениями 1
 data.insert(0, 'Ones', 1)
 
+#Возвращаем кол-во колонок таблицы
 cols = data.shape[1]
+#Делим на проекции: X - первые 2 столбца
 X = data.iloc[:,0:cols-1]
+# y - последний столбец
 y = data.iloc[:,cols-1:cols]
 
+#Создаем массив массивов из значений X
 X = np.matrix(X.values)
+print(X)
+#Создаем массив массивов из значений Y
 y = np.matrix(y.values)
+print(y)
 
 
+#Реализация формулы для подсчета значения целевой функции
 def computeCost(X, y, theta):
-    inner = (X * theta - y).T * (X * theta - y)
-    return inner[0,0]/(2 * len(X))
+   inner = (X * theta - y).T * (X * theta - y)
+   print(inner)
+   return inner[0,0]/(2 * len(X))
 
 
+# Обычная проверка на одномерный случай без обобщения
 theta = np.array([[0],[0]])
 print(computeCost(X, y, theta))
 
 
 #%% алгоритм градиентного спуска
+#Здесь theta определяет входной аргумент для целевой функции, которую мы хотим минимизировать
 def gradientDescent(X, y, theta, alpha, iters):
     cost = np.zeros(iters)
 
@@ -42,8 +56,8 @@ def gradientDescent(X, y, theta, alpha, iters):
     return theta, cost
 
 
-alpha = 0.1
-iters = 30
+alpha = 0.01
+iters = 1000
 
 
 def createPlot(alpha, iters):
