@@ -25,3 +25,18 @@ model.fit(X, y)
 
 f = model.predict(X)
 print(f)
+
+x = np.linspace(data.Population.min(),
+                data.Population.max(), 100)
+
+f1 = f[0,0] + (f[1, 0] * x)
+
+fig, ax = plt.subplots(figsize=(12, 8))
+ax.plot(x, f1, 'r', label='Prediction')
+ax.scatter(data.Population, data.Profit, label='Training Data')
+ax.legend(loc=2)
+ax.set_xlabel('Population')
+ax.set_ylabel('Profit')
+ax.set_title('Predicted Profit vs. Population Size')
+
+plt.show()
