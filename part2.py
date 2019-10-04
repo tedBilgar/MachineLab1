@@ -47,3 +47,12 @@ g, cost = gradientDescent(X, y, theta, alpha, iters)
 print('Value of Function on last iterate: ' + str(cost[-1]))
 
 
+##Построение графика потерь
+fig, ax = plt.subplots(figsize=(12, 8))
+ax.plot(np.arange(iters), cost, 'r')
+ax.set_xlabel('Iterations')
+ax.set_ylabel('Cost')
+ax.set_title('Error vs. Training Epoch')
+
+plt.show()
+
